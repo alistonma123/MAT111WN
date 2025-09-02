@@ -1,77 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Intro – Turquoise and Tobacco</title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background: #111;
-      color: #fff;
-      font-family: monospace;
-      flex-direction: column;
-    }
-    #intro-text {
-      font-size: 1.4rem;
-      white-space: pre-wrap;
-      text-align: center;
-    }
-    #cursor {
-      display: inline-block;
-      width: 8px;
-      background: #fff;
-      margin-left: 2px;
-      animation: blink 0.8s infinite;
-    }
-    @keyframes blink {
-      50% { background: transparent; }
-    }
-    #enter-btn {
-      margin-top: 20px;
-      padding: 8px 18px;
-      background: #444;
-      border: none;
-      color: #fff;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    #enter-btn:hover {
-      background: #666;
-    }
-  </style>
-</head>
-<body>
-  <div id="intro-text"></div><div id="cursor"></div>
-  <button id="enter-btn" style="display:none;">Enter</button>
+<script>
+  // If someone hits /intro.html after having seen it, skip to main.
+  if (localStorage.getItem("introSeen") === "true") {
+    window.location.replace("./main.html");
+  }
 
-  <script>
-    const text = "Welcome to Turquoise and Tobacco.\nClick Enter to proceed.";
-    const introText = document.getElementById("intro-text");
-    const enterBtn = document.getElementById("enter-btn");
-    const cursor = document.getElementById("cursor");
-    let i = 0;
+  const text = "Welcome to Turquoise and Tobacco.\nClick Enter to proceed.";
+  const introText = document.getElementById("intro-text");
+  const enterBtn = document.getElementById("enter-btn");
+  const cursor = document.getElementById("cursor");
+  let i = 0;
 
-    function typeWriter() {
-      if (i < text.length) {
-        introText.textContent += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, 50);
-      } else {
-        cursor.style.display = "none";
-        enterBtn.style.display = "inline-block";
-      }
+  function typeWriter() {
+    if (i < text.length) {
+      introText.textContent += text.charAt(i++);
+      setTimeout(typeWriter, 50);
+    } else {
+      cursor.style.display = "none";
+      enterBtn.style.display = "inline-block";
     }
-    typeWriter();
+  }
+  typeWriter();
 
-    enterBtn.addEventListener("click", () => {
-      window.location.href = "index.html"; // go to your sketch
-    });
-  </script>
-</body>
-</html>
+  enterBtn.addEventListener("click", () => {
+    localStorage.setItem("introSeen", "true");
+    window.location.replace("./main.html");
+  });
+</script>
