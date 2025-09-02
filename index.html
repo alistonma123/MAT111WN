@@ -1,21 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Loading…</title>
-
-  <!-- If JS is off, go to intro.html -->
-  <noscript><meta http-equiv="refresh" content="0; url=./intro.html"></noscript>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Intro – Turquoise and Tobacco</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #111;
+      color: #fff;
+      font-family: monospace;
+      flex-direction: column;
+    }
+    #intro-text {
+      font-size: 1.4rem;
+      white-space: pre-wrap;
+      text-align: center;
+    }
+    #cursor {
+      display: inline-block;
+      width: 8px;
+      background: #fff;
+      margin-left: 2px;
+      animation: blink 0.8s infinite;
+    }
+    @keyframes blink {
+      50% { background: transparent; }
+    }
+    #enter-btn {
+      margin-top: 20px;
+      padding: 8px 18px;
+      background: #444;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: none;
+    }
+    #enter-btn:hover {
+      background: #666;
+    }
+  </style>
+</head>
+<body>
+  <div id="intro-text"></div><div id="cursor"></div>
+  <button id="enter-btn">Enter</button>
 
   <script>
-    // First visit → go to intro; otherwise go straight to main.
-    if (localStorage.getItem("introSeen") === "true") {
-      window.location.replace("./main.html");
-    } else {
-      window.location.replace("./intro.html");
+    const text = "Welcome to Turquoise and Tobacco.\nClick Enter to proceed.";
+    const introText = document.getElementById("intro-text");
+    const enterBtn = document.getElementById("enter-btn");
+    const cursor = document.getElementById("cursor");
+    let i = 0;
+
+    function typeWriter() {
+      if (i < text.length) {
+        introText.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 50);
+      } else {
+        cursor.style.display = "none";
+        enterBtn.style.display = "inline-block";
+      }
     }
+    typeWriter();
+
+    enterBtn.addEventListener("click", () => {
+      window.location.href = "main.html"; // send user to game
+    });
   </script>
-</head>
-<body></body>
+</body>
 </html>
