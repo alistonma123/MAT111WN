@@ -42,9 +42,7 @@
       cursor: pointer;
       display: none;
     }
-    #enter-btn:hover {
-      background: #666;
-    }
+    #enter-btn:hover { background: #666; }
   </style>
 </head>
 <body>
@@ -58,20 +56,18 @@
     const cursor = document.getElementById("cursor");
     let i = 0;
 
-    function typeWriter() {
+    (function typeWriter() {
       if (i < text.length) {
-        introText.textContent += text.charAt(i);
-        i++;
+        introText.textContent += text.charAt(i++);
         setTimeout(typeWriter, 50);
       } else {
         cursor.style.display = "none";
         enterBtn.style.display = "inline-block";
       }
-    }
-    typeWriter();
+    })();
 
     enterBtn.addEventListener("click", () => {
-      window.location.href = "main.html"; // send user to game
+      window.location.href = "./main.html"; // go to your sketch
     });
   </script>
 </body>
